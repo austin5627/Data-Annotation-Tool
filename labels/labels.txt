@@ -1,0 +1,11 @@
+jumping
+sleeping
+eating
+barking
+walking
+running
+resting
+car
+urination_m
+urination_f
+defecation
