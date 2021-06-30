@@ -1,7 +1,7 @@
 # Python Labeling Tool
 
 
-##Required Libraries
+## Required Libraries
  - Matplotlib
  - Numpy
  - Pandas
@@ -9,9 +9,9 @@
  - python-vlc
     - requires vlc to be installed
 
-## hot keys
+## Hot Keys
 - space: pause
-- 1-9: start/stop labeling with label n
+- 1-9: start/stop labeling with nth label
 - tab: start/stop labeling with selected label
 - Right: forward 5 seconds
 - Left: back 5 seconds
@@ -71,4 +71,36 @@
 
 7. Graph Window
     - Beneath the video is the graph
-    -
+    - It plots the data elements across the bottom of the screen
+    - The vertical red line marks the current sample
+    - Double left clicking anywhere on the graph when a label is selected will label the area between the current sample and the point clicked
+    - Double right clicking on a labeled area will remove the label
+    - Middle clicking will jump to the sample clicked
+
+8. Graph Toolbar
+    - The toolbar below the graph on the far right contains tools for interacting with the graph
+    - The **home** button will move the graph to its initial view. Sample 0 on the far left and sample 1000 on the far right
+    - The **left arrow** will move to the previous view
+    - The **right arrow** will move to back to view before the left arrow was clicked
+    - The **pan/zoom** button allows panning and zooming of the graph
+        - left clicking and draging while this is pressed will drag the view around
+        - right clicking and dragging will change the zoom
+    - The **settings** button allows changeing the size of the margins and graph
+    - The **save** button saves the graph as an image
+    - The **labels** on the far right display the coordinates underneath the mouse
+
+9. Video Toolbar
+    - on the right of the graph toolbar
+    - **Save labels** saves the current labels into a text file in the **labels** folder
+        - The labels will be saved in **labels/\<data filename\>-annotations.txt**
+        - If **save labels** is not clicked exiting the program or loading a new file will save the labels into a temporary file **temp-annotations.txt**
+        - This file will be overwritten with current file's labels everytime the program exits or a file is loaded
+    - The **speed** button allows changeing the speed of the video to 1/2x speed, 1x speed, and 2x speed
+    - The **<<5s <1s 1s> 5s>>** buttons jump the video forward/backward 1 and 5 seconds
+    - The play/pause button pauses the video and the graph if sync points have been added
+    - If **auto scroll** is checked and sync points have been added the graph will auto center on the current sample
+
+10. Info bar
+    - Below the toolbars
+    - Displays the current time and sample
+    - Displays the values of the current sample

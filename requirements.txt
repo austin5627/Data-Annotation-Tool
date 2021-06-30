@@ -1,0 +1,5 @@
+numpy~=1.21.0
+matplotlib~=3.4.2
+PySimpleGUI~=4.45.0
+
+pandas~=1.2.5

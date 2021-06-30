@@ -1,18 +1,16 @@
 import math
 import os
 import time
+from sys import platform
 
+import PySimpleGUI as sg
+import matplotlib.animation as animation
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import vlc
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk as Toolbar
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 from matplotlib.patches import Rectangle
-import matplotlib
-import PySimpleGUI as sg
-from enum import Enum
-from sys import platform
 
 plt.style.use('dark_background')
 plt.rcParams['keymap.all_axes'].remove('a')
@@ -56,7 +54,9 @@ def update_line(num, line, last):
         scale = plt.xlim()[1] - plt.xlim()[0]
         plt.xlim([curr_sample - scale / 2, curr_sample + scale / 2])
 
-    curr_string = f'Current Time: {int(curr_time):<5,} Current Sample: {int(curr_sample):<4,} Values: ('
+    curr_string = f'Current Time: {int(curr_time):<5,} ' \
+                  f'Current Sample: {int(curr_sample):<4,}' \
+                  f' Values: ('
     for d in data.columns:
         if curr_sample >= 0:
             curr_string += f'{d}:{data[d][int(curr_sample)]}, '
@@ -177,8 +177,11 @@ def load_file(file_name):
 
 def save_labels():
     annotations_filename = data_file[:-4] + '-annotations.txt'
+
+    sorted_labels = sorted(label_list, key=lambda x: (x[0][0], x[0][1]))
+
     with open(LABELS_DIR + annotations_filename, 'w') as annotations_file:
-        for label in label_list:
+        for label in sorted_labels:
             label[0].sort()
             label_line = str(label[0][0]) + ' - ' + str(label[0][1]) + ', ' + label[2] + '\n'
             annotations_file.write(label_line)
@@ -318,7 +321,6 @@ plt.figure(1)
 plt.legend()
 fig = plt.gcf()
 DPI = fig.get_dpi()
-# ------------------------------- you have to play with this size to reduce the movement error when the mouse
 # hovers over the figure, it's close to canvas size
 fig.set_size_inches((fig_width + 4) / float(DPI), (fig_height + 4) / float(DPI))
 fig.canvas.mpl_connect('button_press_event', on_click)
@@ -390,9 +392,9 @@ while True:
     if event == '-Sync-':
         sync_time, sync_sample = curr_time, curr_sample
         if values['-SyTime-']:
-            sync_time = int(values('-SyTime'))
-        elif values['-SySample-']:
-            sync_sample = int(values('-SySample'))
+            sync_time = int(values['-SyTime-'])
+        if values['-SySample-']:
+            sync_sample = int(values['-SySample'])
         sync.append([int(sync_time), int(sync_sample)])
         window['-SyncTab-'].update(values=sync)
         if len(sync) >= 2 and sync[0] != sync[1]:
